@@ -1,0 +1,11 @@
+P:\scheduleForm\scheduleForm\bin\Debug\scheduleForm.exe.config
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.csprojResolveAssemblyReference.cache
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.dayForm.resources
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.Properties.Resources.resources
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.scheduleMakerForm.resources
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.csproj.GenerateResource.Cache
+P:\scheduleForm\scheduleForm\bin\Debug\scheduleForm.exe
+P:\scheduleForm\scheduleForm\bin\Debug\scheduleForm.pdb
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.exe
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.pdb
+P:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.infoForm.resources
