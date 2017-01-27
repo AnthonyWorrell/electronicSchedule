@@ -16,7 +16,7 @@ namespace scheduleForm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new scheduleMakerForm());
+            Application.Run(new loginForm());
         }
     }
 }

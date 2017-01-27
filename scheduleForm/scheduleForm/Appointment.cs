@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace scheduleForm
 {
-    class Appointment
+    class Appointment : IComparable<Appointment>
     {
-        private DateTime start;
-        private DateTime end;
-        private string server;
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
+        public string server { get; set; }
+        public string room { get; set; }
      
         public Appointment(DateTime s, DateTime e)
         {
@@ -24,11 +25,31 @@ namespace scheduleForm
             server = se;
         }
 
+        public Appointment(DateTime s, DateTime e, string se, string r)
+        {
+            start = s;
+            end = e;
+            server = se;
+            room = r;
+        }
+
         public bool isIntercepted(DateTime dt)
         {
-            return (start > dt && dt < end);
+            return (start <= dt && dt < end);
+        }
+
+        public override string ToString()
+        {
+            if(server!= "" || room!="")
+                return start.ToShortTimeString() + "-" + end.ToShortTimeString()+" ("+server +", "+room+")";
+            else
+                return start.ToShortTimeString() + "-" + end.ToShortTimeString(); 
         }
 
 
+        public int CompareTo(Appointment other)
+        {
+            return start.CompareTo(other.start);
+        }
     }
 }

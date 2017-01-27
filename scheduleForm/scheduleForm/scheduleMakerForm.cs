@@ -13,16 +13,26 @@ namespace scheduleForm
 {
     public partial class scheduleMakerForm : Form
     {
-        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=P:\scheduleForm\scheduleDB.accdb;
+        #region<class variables>
+
+        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=X:\Data\scheduleDB.accdb;
                                             Persist Security Info=False;";
 
         private OleDbConnection conn = new OleDbConnection(conString);
 
-        private OleDbCommand cmd;
-        private string month;
-        public scheduleMakerForm()
+        private int rank;
+
+        private string user;
+
+        #endregion</class variables>
+
+        #region<class drivers and constructors>
+
+        public scheduleMakerForm(string n, int r)
         {
             InitializeComponent();
+            user = n;
+            rank = r;
         }
 
         private void scheduleMakerForm_Load(object sender, EventArgs e)
@@ -32,6 +42,7 @@ namespace scheduleForm
                 conn.Open();
                 lbl_connected.Text = "Connected";
                 lbl_connected.ForeColor = Color.Green;
+                lbl_name.Text = "Signed in as: " + user;
                 conn.Close();
             }
             catch (Exception ex)
@@ -39,28 +50,27 @@ namespace scheduleForm
                 MessageBox.Show("Error " + ex);
                 conn.Close();
             }
-        }
-        private void launchDayForm()
-        {
-            dayForm df = new dayForm(month);
-            df.ShowDialog();
-        }
-        private void btn_jan_Click(object sender, EventArgs e)
-        {
-            month = btn_jan.Text.ToString();
-            launchDayForm();
+            
+            if(rank > 0)
+            {
+                btn_editData.Visible = true;
+            }                           
         }
 
-        private void btn_feb_Click(object sender, EventArgs e)
+        #endregion</class drivers and constructors>
+
+        #region<event handlers>
+        private void btn_enter_Click(object sender, EventArgs e)
         {
-            month = btn_feb.Text.ToString();
-            launchDayForm();
+            infoForm inf = new infoForm(mtc_calender.SelectionRange.Start, rank, user);
+            inf.ShowDialog();
         }
 
-        private void btn_march_Click(object sender, EventArgs e)
+        private void btn_editData_Click(object sender, EventArgs e)
         {
-            month = btn_march.Text.ToString();
-            launchDayForm();
+            editForm ef = new editForm(user);
+            ef.ShowDialog();
         }
+        #endregion</event handlers>
     }
 }
