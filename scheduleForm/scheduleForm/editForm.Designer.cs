@@ -32,11 +32,11 @@
             this.lbl_connected = new System.Windows.Forms.Label();
             this.lbl_name = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.txt_room = new System.Windows.Forms.TextBox();
-            this.txt_server = new System.Windows.Forms.TextBox();
             this.btn_addRoom = new System.Windows.Forms.Button();
+            this.txt_room = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btn_addServer = new System.Windows.Forms.Button();
+            this.txt_server = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -82,6 +82,23 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edit Rooms";
             // 
+            // btn_addRoom
+            // 
+            this.btn_addRoom.Location = new System.Drawing.Point(127, 97);
+            this.btn_addRoom.Name = "btn_addRoom";
+            this.btn_addRoom.Size = new System.Drawing.Size(75, 23);
+            this.btn_addRoom.TabIndex = 1;
+            this.btn_addRoom.Text = "Add Room";
+            this.btn_addRoom.UseVisualStyleBackColor = true;
+            this.btn_addRoom.Click += new System.EventHandler(this.btn_addRoom_Click);
+            // 
+            // txt_room
+            // 
+            this.txt_room.Location = new System.Drawing.Point(112, 53);
+            this.txt_room.Name = "txt_room";
+            this.txt_room.Size = new System.Drawing.Size(100, 20);
+            this.txt_room.TabIndex = 0;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.btn_addServer);
@@ -93,12 +110,15 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Edit Servers";
             // 
-            // txt_room
+            // btn_addServer
             // 
-            this.txt_room.Location = new System.Drawing.Point(112, 53);
-            this.txt_room.Name = "txt_room";
-            this.txt_room.Size = new System.Drawing.Size(100, 20);
-            this.txt_room.TabIndex = 0;
+            this.btn_addServer.Location = new System.Drawing.Point(127, 117);
+            this.btn_addServer.Name = "btn_addServer";
+            this.btn_addServer.Size = new System.Drawing.Size(75, 23);
+            this.btn_addServer.TabIndex = 2;
+            this.btn_addServer.Text = "Add Server";
+            this.btn_addServer.UseVisualStyleBackColor = true;
+            this.btn_addServer.Click += new System.EventHandler(this.btn_addServer_Click);
             // 
             // txt_server
             // 
@@ -106,26 +126,6 @@
             this.txt_server.Name = "txt_server";
             this.txt_server.Size = new System.Drawing.Size(100, 20);
             this.txt_server.TabIndex = 1;
-            // 
-            // btn_addRoom
-            // 
-            this.btn_addRoom.Location = new System.Drawing.Point(127, 109);
-            this.btn_addRoom.Name = "btn_addRoom";
-            this.btn_addRoom.Size = new System.Drawing.Size(75, 23);
-            this.btn_addRoom.TabIndex = 1;
-            this.btn_addRoom.Text = "Add Room";
-            this.btn_addRoom.UseVisualStyleBackColor = true;
-            this.btn_addRoom.Click += new System.EventHandler(this.btn_addRoom_Click);
-            // 
-            // btn_addServer
-            // 
-            this.btn_addServer.Location = new System.Drawing.Point(127, 126);
-            this.btn_addServer.Name = "btn_addServer";
-            this.btn_addServer.Size = new System.Drawing.Size(75, 23);
-            this.btn_addServer.TabIndex = 2;
-            this.btn_addServer.Text = "Add Server";
-            this.btn_addServer.UseVisualStyleBackColor = true;
-            this.btn_addServer.Click += new System.EventHandler(this.btn_addServer_Click);
             // 
             // editForm
             // 

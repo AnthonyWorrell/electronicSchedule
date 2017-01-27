@@ -33,10 +33,11 @@ namespace scheduleForm
         private string room;
         private string cmdText;
 
-        private DateTime current;
-        private List<DateTime> openTimes;
+        private DateTime current;        
         private DateTime[] endTimes;
-        private List<DateTime> check;
+
+        private List<DateTime> startTimes;
+        private List<DateTime> timeRange;
 
         #endregion</class variables>
 
@@ -50,9 +51,9 @@ namespace scheduleForm
             room = r;
             rank = ra;
             user = u;
-            openTimes = ot;
-            endTimes = new DateTime[openTimes.Count];
-            openTimes.CopyTo(endTimes);
+            startTimes = ot;
+            endTimes = new DateTime[startTimes.Count];
+            startTimes.CopyTo(endTimes);
         }
 
         private void appointmentForm_Load(object sender, EventArgs e)
@@ -63,7 +64,7 @@ namespace scheduleForm
                 lbl_name.Text = name + ", " + room;
                 lbl_connected.Text = "Connected";
                 lbl_connected.ForeColor = Color.Green;
-                cmb_start.DataSource = openTimes;
+                cmb_start.DataSource = startTimes;
                 cmb_end.DataSource = endTimes;
                 conn.Close();
             }
@@ -83,6 +84,7 @@ namespace scheduleForm
 
             cmd2 = new OleDbCommand(cmdText, conn);
 
+            //check if start > end or if the desired appoint intercepts existing appointments
             if (isValidAppointment())
             {
                 conn.Open();//open
@@ -104,16 +106,21 @@ namespace scheduleForm
         #endregion</event handlers>
 
         #region<non-void functions>
+
+        //checks if the appoint is possible.
         private bool isValidAppointment()
         {
+            //desired appointment
             app = new Appointment(Convert.ToDateTime(cmb_start.SelectedItem),
                                   Convert.ToDateTime(cmb_end.SelectedItem));
 
+            //if start is greater then end, invalid appointment
             if(app.end <= app.start)
             {
                 MessageBox.Show("Error: start time can not be less then or equal to end time");
                 return false;
-            }else
+            }
+            else
             {
                 if (room != "")
                 {
@@ -134,18 +141,24 @@ namespace scheduleForm
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
+                //temp appointment, used to store appointments in database
                 Appointment temp;
+
                 while (reader.Read())
                 {
+                    //give temp a value
                     temp = new Appointment(Convert.ToDateTime(reader["Time In"]),
                                                   Convert.ToDateTime(reader["Time Out"]));
 
-                    check = openTimes.GetRange(openTimes.IndexOf(temp.start),
-                                              openTimes.IndexOf(temp.end) - openTimes.IndexOf(temp.start));
+                    //get the time range of the selected appointment and put it in a list
+                    timeRange = startTimes.GetRange(startTimes.IndexOf(temp.start),
+                                              startTimes.IndexOf(temp.end) - startTimes.IndexOf(temp.start));
 
-                    for (int i = 0; i < check.Count; i++)
+                    //check if any of those times intersept the desired appointment
+                    //if so, return false
+                    for (int i = 0; i < timeRange.Count; i++)
                     {
-                        if (app.isIntercepted(check[i]))
+                        if (app.isIntercepted(timeRange[i]))
                         {
                             conn.Close();
                             MessageBox.Show("time unavailable");

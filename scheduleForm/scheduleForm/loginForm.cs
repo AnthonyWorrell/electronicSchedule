@@ -23,7 +23,6 @@ namespace scheduleForm
 
         private OleDbConnection conn = new OleDbConnection(conString);
         private OleDbCommand cmd;
-        private OleDbCommand cmd2;
         private scheduleMakerForm sf;
 
         #endregion</class variables>

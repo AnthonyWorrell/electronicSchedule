@@ -47,9 +47,12 @@ namespace scheduleForm
         {
             string cmdText = "update [npEmployeeTest] set [Password] = ?, [FirstLogin] = 0 where [Username] = ?";
             conn.Open();
+
             cmd = new OleDbCommand(cmdText, conn);
+
             cmd.Parameters.AddWithValue("?", txt_pword.Text);
             cmd.Parameters.AddWithValue("?", username);
+
             if (txt_pword.Text == txt_pwordConfirm.Text)
             {
                 cmd.ExecuteScalar();
@@ -58,6 +61,7 @@ namespace scheduleForm
             }
             else
                 MessageBox.Show("passwords do not match");
+
             conn.Close();
         }
         

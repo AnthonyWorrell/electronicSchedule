@@ -103,12 +103,16 @@ namespace scheduleForm
                 MessageBox.Show("No Search Type Selected");
             }
         }
+
+        //reset controls
         private void btn_resetTimes_Click(object sender, EventArgs e)
         {
             cmb_times.DataSource = null;
             cmb_servers.SelectedItem = "";
             cmb_rooms.SelectedItem = "";
         }
+
+        //pass in required paramaters to appointForm
         private void btn_schedule_Click(object sender, EventArgs e)
         {
             appointmentForm af = new appointmentForm(current,
@@ -117,6 +121,7 @@ namespace scheduleForm
             af.ShowDialog();
         }
 
+        //delete appointment if the user has that level of control
         private void btn_delete_Click(object sender, EventArgs e)
         {
             DialogResult result;
