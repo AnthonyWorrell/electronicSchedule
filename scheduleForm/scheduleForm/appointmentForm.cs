@@ -141,7 +141,7 @@ namespace scheduleForm
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
-                //temp appointment, used to store appointments in database
+                //temp appointment, used to store appointments from database
                 Appointment temp;
 
                 while (reader.Read())
