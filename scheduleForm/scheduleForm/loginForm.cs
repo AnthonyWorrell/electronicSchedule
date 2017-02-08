@@ -2,38 +2,53 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
 
 namespace scheduleForm
 {
     public partial class loginForm : Form
     {
-
         #region<class variables>
 
-        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=X:\Data\npEmployeeDb.accdb;
-                                            Jet OLEDB:Database Password=NBHCdata;";
+        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=P:\Test Databases\TestEmployeeDb.accdb;
+                                            Jet OLEDB:Database Password=changeMe;";
         private bool firstLogin;
-        private string username;
+
+        private string cmdText;
+        private string tempPassword = "changeMe";
+        private string password;
+        private string hashedPassword;
+        private string user;
+
+        private int rank;
+
+        private changePasswordForm cf;
+        private scheduleMakerForm sf;
+        private SecurePasswordHasher hasher;
 
         private OleDbConnection conn = new OleDbConnection(conString);
         private OleDbCommand cmd;
-        private scheduleMakerForm sf;
+        private OleDbDataReader reader;
 
         #endregion</class variables>
 
         #region<class drivers and constructors>
-         
+
         public loginForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// check database connection on load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loginForm_Load(object sender, EventArgs e)
         {
             try
@@ -52,59 +67,76 @@ namespace scheduleForm
 
         #region<event handlers>
 
+        /// <summary>
+        /// verify valid username and password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_logIn_Click(object sender, EventArgs e)
         {
-            //paramaterized query statement
-            string cmdText = "select count(*) from [npEmployeeTest] where [Username]=? and [Password]=?";
-            string name;
-            int rank;
+            //paramaterized query
+            cmdText = "select * from [npEmployeeTest] where [Username]=?";
+
             conn.Open();
+
             cmd = new OleDbCommand(cmdText, conn);
 
             cmd.Parameters.AddWithValue("?", txt_username.Text);
-            cmd.Parameters.AddWithValue("?", txt_password.Text);
+            reader = cmd.ExecuteReader();
 
-            int result = (int)cmd.ExecuteScalar();
-
-            if (result > 0)//if valid log in
+            if (reader.Read())//if valid user name
             {
-                MessageBox.Show("Log in Successful");
-
-                string selectCmd = "select * from [npEmployeeTest] where [Username] =? and [Password] =?";
-                OleDbCommand selcmd = new OleDbCommand(selectCmd, conn);
-
-                //qyery parameters
-                selcmd.Parameters.AddWithValue("?", txt_username.Text);
-                selcmd.Parameters.AddWithValue("?", txt_password.Text);
-
-                OleDbDataReader reader = selcmd.ExecuteReader();
-                reader.Read();
-                name = reader["Last"].ToString() + ", " + reader["First"].ToString();
-                username = reader["Username"].ToString();
                 firstLogin = (bool)reader["FirstLogin"];
 
                 if (firstLogin)
                 {
-                    changePasswordForm cf = new changePasswordForm(username);
-                    cf.ShowDialog();
+                    password = tempPassword;//hard coded temp password for first time users
+
+                    if (txt_password.Text.ToString().Equals(password))
+                    {
+                        cf = new changePasswordForm(reader["Username"].ToString());
+                        cf.ShowDialog();
+                    }
+                    else
+                        MessageBox.Show("invalid username or password");
+                }
+                else
+                {
+                    hasher = new SecurePasswordHasher();
+                    password = txt_password.Text.ToString();
+
+                    //get hashed password from database
+                    hashedPassword = reader["HashedPassword"].ToString();
+
+                    if (hasher.Verify(password, hashedPassword))
+                    {
+                        MessageBox.Show("login successful");
+                        user = reader["Last"].ToString() + ", " + reader["First"].ToString();
+                        rank = (int)reader["Rank"];
+                        sf = new scheduleMakerForm(user, rank);
+                        this.Hide();
+                        sf.ShowDialog();
+                        conn.Close();
+                        txt_username.Text = "";
+                        txt_password.Text = "";
+                        this.ShowDialog();
+                    }
+                    else
+                        MessageBox.Show("invalid username or password");
                 }
 
-                rank = Convert.ToInt32(reader["rank"]);
-
-                //send logged in employee info to menu form
-                sf = new scheduleMakerForm(name,rank);
-
-                this.Hide();//hide log in form
-                sf.ShowDialog();
-                this.Dispose();
-                this.Close();//close program                  
             }
             else//if invalid log in
                 MessageBox.Show("invalid username or password");
+
             conn.Close();
         }
 
         #endregion</event handlers>
 
+        #region<void functions>
+
+        #endregion</void functions>
+        
     }
 }

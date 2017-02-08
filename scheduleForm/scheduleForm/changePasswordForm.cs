@@ -13,20 +13,35 @@ namespace scheduleForm
 {
     public partial class changePasswordForm : Form
     {
-        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=X:\Data\npEmployeeDb.accdb;
-                                            Jet OLEDB:Database Password=NBHCdata;";
+        #region<class variables>
+
+        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=P:\Test Databases\TestEmployeeDb.accdb;
+                                            Jet OLEDB:Database Password=changeMe;";
 
         private string username;
+        private string hashedPassword;
 
         private OleDbConnection conn = new OleDbConnection(conString);
         private OleDbCommand cmd;
+        private SecurePasswordHasher hasher;
 
-        public changePasswordForm(string u)
+        #endregion</class variables>
+
+        #region<class drivers and constructors>
+        /// <summary>
+        /// New password change form, requires username for sql
+        /// </summary>
+        /// <param name="Username">username</param>
+        public changePasswordForm(string Username)
         {
             InitializeComponent();
-            username = u;
+            username = Username;
         }
-
+        /// <summary>
+        /// checks connection to database on load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changePasswordForm_Load(object sender, EventArgs e)
         {
             try
@@ -43,20 +58,34 @@ namespace scheduleForm
             }
         }
 
+        #endregion</class drivers and constructors>
+
+        #region<event handlers>
+        /// <summary>
+        /// if valid password and passwords match, update password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_confirm_Click(object sender, EventArgs e)
         {
-            string cmdText = "update [npEmployeeTest] set [Password] = ?, [FirstLogin] = 0 where [Username] = ?";
+            string cmdText = "update [npEmployeeTest] set [HashedPassword] = ?, [FirstLogin] = 0 where [Username] = ?";
             conn.Open();
 
-            cmd = new OleDbCommand(cmdText, conn);
-
-            cmd.Parameters.AddWithValue("?", txt_pword.Text);
-            cmd.Parameters.AddWithValue("?", username);
+            cmd = new OleDbCommand(cmdText, conn);            
 
             if (txt_pword.Text == txt_pwordConfirm.Text)
             {
+                hasher = new SecurePasswordHasher();
+
+                hashedPassword = hasher.Hash(txt_pword.Text.ToString());
+
+                cmd.Parameters.AddWithValue("?", hashedPassword);
+                cmd.Parameters.AddWithValue("?", username);
+
                 cmd.ExecuteScalar();
+
                 MessageBox.Show("Password changed");
+
                 this.Close();
             }
             else
@@ -64,7 +93,8 @@ namespace scheduleForm
 
             conn.Close();
         }
-        
+        #endregion</event handlers>
+
     }
 }
 

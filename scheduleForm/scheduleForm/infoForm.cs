@@ -16,7 +16,7 @@ namespace scheduleForm
     {
         #region <class variables>
 
-        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=X:\Data\scheduleDB.accdb;
+        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=P:\Test Databases\TestscheduleDB.accdb;
                                             Persist Security Info=False;";
 
         private OleDbConnection conn = new OleDbConnection(conString);
@@ -34,31 +34,37 @@ namespace scheduleForm
 
         private List<string> servers;
         private List<string> rooms;
-        private List<DateTime> openTimes;
-        private List<Appointment> appointments;
+        private List<DateTime> PossibleAppointmentTimes;
+        private List<Appointment> Appointments;
 
         #endregion</class variables>
 
         #region<class drivers and constructors>
-
-        public infoForm(DateTime c, int r, string u)
+        /// <summary>
+        /// Pass needed data
+        /// </summary>
+        /// <param name="CurrentTime">Time selected in schedule maker form</param>
+        /// <param name="Rank">User rank</param>
+        /// <param name="User">User name</param>
+        public infoForm(DateTime CurrentTime, int Rank, string User)
         {
             InitializeComponent();
-            rank = r;
-            user = u;
-            current = c;
+            rank = Rank;
+            user = User;
+            current = CurrentTime;
             servers = new List<string>();
             rooms = new List<string>();
-            openTimes = new List<DateTime>();
-            appointments = new List<Appointment>();
+            PossibleAppointmentTimes = new List<DateTime>();
+            Appointments = new List<Appointment>();
         }
 
         private void infoForm_Load(object sender, EventArgs e)
         {
             initData();
         }
-
-        //mini driver method. calls all load methods
+        /// <summary>
+        /// mini driver method. calls all load methods
+        /// </summary>
         private void initData()
         {
             try
@@ -83,7 +89,11 @@ namespace scheduleForm
         #endregion</class drivers and constructors>
 
         #region<event handlers>
-
+        /// <summary>
+        /// Depending on radio button checked, call method with different SQL statements
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_check_Click(object sender, EventArgs e)
         {
             if (rad_servers.Checked)
@@ -104,7 +114,11 @@ namespace scheduleForm
             }
         }
 
-        //reset controls
+        /// <summary>
+        /// Reset controls
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_resetTimes_Click(object sender, EventArgs e)
         {
             cmb_times.DataSource = null;
@@ -112,16 +126,25 @@ namespace scheduleForm
             cmb_rooms.SelectedItem = "";
         }
 
-        //pass in required paramaters to appointForm
+        /// <summary>
+        /// pass required data to schedule form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_schedule_Click(object sender, EventArgs e)
         {
             appointmentForm af = new appointmentForm(current,
                                 cmb_servers.SelectedItem.ToString(), cmb_rooms.SelectedItem.ToString(),
-                                openTimes, rank, user);
+                                PossibleAppointmentTimes, rank, user);
             af.ShowDialog();
         }
 
-        //delete appointment if the user has that level of control
+        /// <summary>
+        /// Delete selected appointment
+        /// Only possible if user rank >1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_delete_Click(object sender, EventArgs e)
         {
             DialogResult result;
@@ -141,7 +164,9 @@ namespace scheduleForm
 
         #region<void functions>
 
-        //Method used to load servers into a list
+        /// <summary>
+        /// load server list
+        /// </summary>
         private void initServers()
         {
             int count = 0;
@@ -162,7 +187,9 @@ namespace scheduleForm
             cmb_servers.DataSource = servers;
         }
 
-        //Method to load rooms into a list
+        /// <summary>
+        /// load room list
+        /// </summary>
         private void initRooms()
         {
             int count = 0;
@@ -184,22 +211,27 @@ namespace scheduleForm
             cmb_rooms.DataSource = rooms;
         }
 
-        //Method used to load all possible times in a list
+        /// <summary>
+        /// load all possible appointment times into list
+        /// </summary>
         private void initTimes()
         {
-            openTimes.Clear();
+            PossibleAppointmentTimes.Clear();
             defaultTime = new DateTime(2017, current.Month, current.Day, 9, 0, 0);
 
             for (int i = 0; i <= 48; i++)
             {
-                openTimes.Add(defaultTime);
+                PossibleAppointmentTimes.Add(defaultTime);
                 defaultTime = defaultTime.AddHours(.25);
             }
         }
+        /// <summary>
+        /// check current appointments for both selected server and room
+        /// </summary>
         private void checkBoth()
         {
             cmb_times.DataSource = null;
-            appointments.Clear();
+            Appointments.Clear();
 
             string temp = @"select * from [CenterSchedule]                     
                         where [CurrentDate] = ? AND [Server] = '" + cmb_servers.SelectedItem.ToString() +
@@ -214,11 +246,13 @@ namespace scheduleForm
                 MessageBox.Show("incomplete field");
             }
         }
-
+        /// <summary>
+        /// check current appointments for selected server
+        /// </summary>
         private void checkServers()
         {
             cmb_times.DataSource = null;
-            appointments.Clear(); ;
+            Appointments.Clear(); ;
 
             string temp = @"select * from [CenterSchedule]                     
                         where [CurrentDate] = ? AND [Server] = '" + cmb_servers.SelectedItem.ToString() + "'";
@@ -232,11 +266,13 @@ namespace scheduleForm
                 MessageBox.Show("incomplete field");
             }
         }
-
+        /// <summary>
+        /// check current appointments for selected room
+        /// </summary>
         private void checkRooms()
         {
             cmb_times.DataSource = null;
-            appointments.Clear();
+            Appointments.Clear();
 
             string temp = @"select * from [CenterSchedule]                     
                          where [CurrentDate] = ? 
@@ -251,6 +287,7 @@ namespace scheduleForm
                 MessageBox.Show("incomplete field");
             }
         }
+
         private void cmb_servers_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmb_times.DataSource = null;
@@ -261,9 +298,14 @@ namespace scheduleForm
             cmb_times.DataSource = null;
         }
 
-        //check for unavialable times and remove them from the open times list
+        /// <summary>
+        /// check for booked appointments
+        /// </summary>
+        /// <param name="c"></param>
         private void getCurrentAppointments(string c)
         {
+            int counter = 0;
+
             cmdText = c;
 
             cmd = new OleDbCommand(cmdText, conn);
@@ -279,15 +321,21 @@ namespace scheduleForm
                 {
                     app = new Appointment(Convert.ToDateTime(reader["Time In"]),
                                               Convert.ToDateTime(reader["Time Out"]), reader["Server"].ToString(), reader["Room"].ToString());
-                    appointments.Add(app);
+                    Appointments.Add(app);
+                    counter++;
                 }
             }
-            appointments.Sort();
-            cmb_times.DataSource = appointments;
+            Appointments.Sort();
+            cmb_times.DataSource = Appointments;
+
+            MessageBox.Show(counter + " appointments found");
 
             conn.Close();//close
         }
-
+        /// <summary>
+        /// delete selected appointment
+        /// only possible if user rank >1
+        /// </summary>
         private void deleteAppointment()
         {
             app = (Appointment)cmb_times.SelectedItem;
@@ -308,10 +356,10 @@ namespace scheduleForm
             conn.Close();
 
             MessageBox.Show("Appointment info: "+app+"has been deleted");
-            appointments.Remove(app);
+            Appointments.Remove(app);
 
             cmb_times.DataSource = null;
-            cmb_times.DataSource = appointments;
+            cmb_times.DataSource = Appointments;
         }
 
         #endregion</void functions>      

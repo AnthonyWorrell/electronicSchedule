@@ -24,3 +24,17 @@ X:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.scheduleMakerForm.resources
 X:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.csproj.GenerateResource.Cache
 X:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.editForm.resources
 X:\scheduleForm\scheduleForm\obj\Debug\scheduleForm.changePasswordForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\bin\Debug\scheduleForm.exe.config
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.exe
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.pdb
+P:\Test Databases\scheduleForm\scheduleForm\bin\Debug\scheduleForm.exe
+P:\Test Databases\scheduleForm\scheduleForm\bin\Debug\scheduleForm.pdb
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.csprojResolveAssemblyReference.cache
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.appointmentForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.changePasswordForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.editForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.infoForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.loginForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.Properties.Resources.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.scheduleMakerForm.resources
+P:\Test Databases\scheduleForm\scheduleForm\obj\Debug\scheduleForm.csproj.GenerateResource.Cache

@@ -15,7 +15,7 @@ namespace scheduleForm
     {
         #region<class variables>
 
-        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=X:\Data\scheduleDB.accdb;
+        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=P:\Test Databases\TestscheduleDB.accdb;
                                             Persist Security Info=False;";
 
         private OleDbConnection conn = new OleDbConnection(conString);
@@ -34,7 +34,11 @@ namespace scheduleForm
             user = n;
             rank = r;
         }
-
+        /// <summary>
+        /// checked connection to database on load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void scheduleMakerForm_Load(object sender, EventArgs e)
         {
             try

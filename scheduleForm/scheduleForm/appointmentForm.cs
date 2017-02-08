@@ -17,7 +17,7 @@ namespace scheduleForm
 
         #region<class variables>
 
-        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=X:\Data\scheduleDB.accdb;
+        private static string conString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=P:\Test Databases\TestscheduleDB.accdb;
                                             Persist Security Info=False;";
 
         private OleDbConnection conn = new OleDbConnection(conString);
@@ -42,20 +42,32 @@ namespace scheduleForm
         #endregion</class variables>
 
         #region<class drivers and constructors>
-
-        public appointmentForm(DateTime c, string n, string r, List<DateTime> ot, int ra, string u)
+        /// <summary>
+        /// Pass needed data
+        /// </summary>
+        /// <param name="currentTime">Time selected in schedule maker form</param>
+        /// <param name="Name">server name</param>
+        /// <param name="Room">room name</param>
+        /// <param name="PossibleAppointmentTimes">all possible appointment times</param>
+        /// <param name="Rank">user rank</param>
+        /// <param name="User">user name</param>
+        public appointmentForm(DateTime currentTime, string Name, string Room, List<DateTime> PossibleAppointmentTimes, int Rank, string User)
         {
             InitializeComponent();
-            current = c;
-            name = n;
-            room = r;
-            rank = ra;
-            user = u;
-            startTimes = ot;
+            current = currentTime;
+            name = Name;
+            room = Room;
+            rank = Rank;
+            user = User;
+            startTimes = PossibleAppointmentTimes;
             endTimes = new DateTime[startTimes.Count];
             startTimes.CopyTo(endTimes);
         }
-
+        /// <summary>
+        /// checks connection to database on load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void appointmentForm_Load(object sender, EventArgs e)
         {
             try
@@ -107,7 +119,11 @@ namespace scheduleForm
 
         #region<non-void functions>
 
-        //checks if the appoint is possible.
+        /// <summary>
+        /// O(n^2) possibly needs refinement.
+        /// Checks appointments on a given day
+        /// </summary>
+        /// <returns>If the appoint is possible</returns>
         private bool isValidAppointment()
         {
             //desired appointment
@@ -141,7 +157,7 @@ namespace scheduleForm
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
-                //temp appointment, used to store appointments from database
+                //temp appointment, used to store appointments in database
                 Appointment temp;
 
                 while (reader.Read())

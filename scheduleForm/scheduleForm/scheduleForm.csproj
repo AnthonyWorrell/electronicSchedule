@@ -55,7 +55,7 @@
     <Compile Include="changePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="changePasswordForm.Designer.cs">
+    <Compile Include="changePasswordForm.designer.cs">
       <DependentUpon>changePasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="editForm.cs">
@@ -73,7 +73,7 @@
     <Compile Include="loginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="loginForm.Designer.cs">
+    <Compile Include="loginForm.designer.cs">
       <DependentUpon>loginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="scheduleMakerForm.cs">
@@ -85,6 +85,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appointment.cs" />
+    <Compile Include="SecurePasswordHasher.cs" />
     <EmbeddedResource Include="appointmentForm.resx">
       <DependentUpon>appointmentForm.cs</DependentUpon>
     </EmbeddedResource>

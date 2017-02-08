@@ -32,9 +32,13 @@
             this.lbl_connected = new System.Windows.Forms.Label();
             this.lbl_name = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cmb_Rooms = new System.Windows.Forms.ComboBox();
+            this.btn_deleteRoom = new System.Windows.Forms.Button();
             this.btn_addRoom = new System.Windows.Forms.Button();
             this.txt_room = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cmb_servers = new System.Windows.Forms.ComboBox();
+            this.btn_deleteServer = new System.Windows.Forms.Button();
             this.btn_addServer = new System.Windows.Forms.Button();
             this.txt_server = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
@@ -73,18 +77,39 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cmb_Rooms);
+            this.groupBox3.Controls.Add(this.btn_deleteRoom);
             this.groupBox3.Controls.Add(this.btn_addRoom);
             this.groupBox3.Controls.Add(this.txt_room);
             this.groupBox3.Location = new System.Drawing.Point(15, 40);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(342, 187);
+            this.groupBox3.Size = new System.Drawing.Size(362, 187);
             this.groupBox3.TabIndex = 38;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edit Rooms";
             // 
+            // cmb_Rooms
+            // 
+            this.cmb_Rooms.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_Rooms.FormattingEnabled = true;
+            this.cmb_Rooms.Location = new System.Drawing.Point(215, 53);
+            this.cmb_Rooms.Name = "cmb_Rooms";
+            this.cmb_Rooms.Size = new System.Drawing.Size(121, 21);
+            this.cmb_Rooms.TabIndex = 3;
+            // 
+            // btn_deleteRoom
+            // 
+            this.btn_deleteRoom.Location = new System.Drawing.Point(231, 104);
+            this.btn_deleteRoom.Name = "btn_deleteRoom";
+            this.btn_deleteRoom.Size = new System.Drawing.Size(87, 23);
+            this.btn_deleteRoom.TabIndex = 2;
+            this.btn_deleteRoom.Text = "Delete Room";
+            this.btn_deleteRoom.UseVisualStyleBackColor = true;
+            this.btn_deleteRoom.Click += new System.EventHandler(this.btn_deleteRoom_Click);
+            // 
             // btn_addRoom
             // 
-            this.btn_addRoom.Location = new System.Drawing.Point(127, 97);
+            this.btn_addRoom.Location = new System.Drawing.Point(37, 104);
             this.btn_addRoom.Name = "btn_addRoom";
             this.btn_addRoom.Size = new System.Drawing.Size(75, 23);
             this.btn_addRoom.TabIndex = 1;
@@ -94,25 +119,46 @@
             // 
             // txt_room
             // 
-            this.txt_room.Location = new System.Drawing.Point(112, 53);
+            this.txt_room.Location = new System.Drawing.Point(25, 53);
             this.txt_room.Name = "txt_room";
             this.txt_room.Size = new System.Drawing.Size(100, 20);
             this.txt_room.TabIndex = 0;
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.cmb_servers);
+            this.groupBox4.Controls.Add(this.btn_deleteServer);
             this.groupBox4.Controls.Add(this.btn_addServer);
             this.groupBox4.Controls.Add(this.txt_server);
             this.groupBox4.Location = new System.Drawing.Point(15, 270);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(342, 187);
+            this.groupBox4.Size = new System.Drawing.Size(362, 187);
             this.groupBox4.TabIndex = 39;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Edit Servers";
             // 
+            // cmb_servers
+            // 
+            this.cmb_servers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_servers.FormattingEnabled = true;
+            this.cmb_servers.Location = new System.Drawing.Point(215, 66);
+            this.cmb_servers.Name = "cmb_servers";
+            this.cmb_servers.Size = new System.Drawing.Size(121, 21);
+            this.cmb_servers.TabIndex = 4;
+            // 
+            // btn_deleteServer
+            // 
+            this.btn_deleteServer.Location = new System.Drawing.Point(231, 119);
+            this.btn_deleteServer.Name = "btn_deleteServer";
+            this.btn_deleteServer.Size = new System.Drawing.Size(87, 23);
+            this.btn_deleteServer.TabIndex = 3;
+            this.btn_deleteServer.Text = "Delete Server";
+            this.btn_deleteServer.UseVisualStyleBackColor = true;
+            this.btn_deleteServer.Click += new System.EventHandler(this.btn_deleteServer_Click);
+            // 
             // btn_addServer
             // 
-            this.btn_addServer.Location = new System.Drawing.Point(127, 117);
+            this.btn_addServer.Location = new System.Drawing.Point(37, 119);
             this.btn_addServer.Name = "btn_addServer";
             this.btn_addServer.Size = new System.Drawing.Size(75, 23);
             this.btn_addServer.TabIndex = 2;
@@ -122,7 +168,7 @@
             // 
             // txt_server
             // 
-            this.txt_server.Location = new System.Drawing.Point(112, 71);
+            this.txt_server.Location = new System.Drawing.Point(25, 66);
             this.txt_server.Name = "txt_server";
             this.txt_server.Size = new System.Drawing.Size(100, 20);
             this.txt_server.TabIndex = 1;
@@ -161,5 +207,9 @@
         private System.Windows.Forms.TextBox txt_room;
         private System.Windows.Forms.Button btn_addServer;
         private System.Windows.Forms.TextBox txt_server;
+        private System.Windows.Forms.ComboBox cmb_Rooms;
+        private System.Windows.Forms.Button btn_deleteRoom;
+        private System.Windows.Forms.ComboBox cmb_servers;
+        private System.Windows.Forms.Button btn_deleteServer;
     }
 }
