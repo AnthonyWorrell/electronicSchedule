@@ -1,4 +1,6 @@
-﻿using System;
+//this class was not coded by me, credit goes to a stack overflow user
+//i made small changes and implemented it in my program.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
