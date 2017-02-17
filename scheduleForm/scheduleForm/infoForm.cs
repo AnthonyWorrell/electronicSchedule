@@ -278,8 +278,14 @@ namespace scheduleForm
                          where [CurrentDate] = ? 
                          AND [Room] = '" + cmb_rooms.SelectedItem.ToString() + "' ";
 
-            if (cmb_rooms.SelectedItem.ToString() != "")
+            if (cmb_rooms.SelectedItem.ToString() != "" && cmb_rooms.SelectedItem.ToString() != "All")
             {
+                getCurrentAppointments(temp);
+            }
+            else if (cmb_rooms.SelectedItem.ToString() == "All")
+            {
+                temp = @"select * from [CenterSchedule]                     
+                         where [CurrentDate] = ?";
                 getCurrentAppointments(temp);
             }
             else
