@@ -133,10 +133,20 @@ namespace scheduleForm
         /// <param name="e"></param>
         private void btn_schedule_Click(object sender, EventArgs e)
         {
-            appointmentForm af = new appointmentForm(current,
+           if(cmb_rooms.SelectedItem.ToString() == "" && cmb_servers.SelectedItem.ToString() == "" )
+            {
+                MessageBox.Show("no field selected");
+            }
+            else if (cmb_rooms.SelectedItem.ToString() == "All")
+            {
+                MessageBox.Show("Cannot schedule for All rooms. only use this feature to check availability");
+            }
+            else
+            {
+                appointmentForm af = new appointmentForm(current,
                                 cmb_servers.SelectedItem.ToString(), cmb_rooms.SelectedItem.ToString(),
                                 PossibleAppointmentTimes, rank, user);
-            af.ShowDialog();
+                af.ShowDialog();
         }
 
         /// <summary>
