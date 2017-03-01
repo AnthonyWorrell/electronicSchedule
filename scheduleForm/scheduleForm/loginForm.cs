@@ -117,8 +117,8 @@ namespace scheduleForm
                         this.Hide();
                         sf.ShowDialog();
                         conn.Close();
-                        txt_username.Text = "";
                         txt_password.Text = "";
+                        txt_username.Text = "";                        
                         this.ShowDialog();
                     }
                     else
