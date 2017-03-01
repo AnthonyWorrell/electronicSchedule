@@ -170,7 +170,7 @@ namespace scheduleForm
                     timeRange = startTimes.GetRange(startTimes.IndexOf(temp.start),
                                               startTimes.IndexOf(temp.end) - startTimes.IndexOf(temp.start));
 
-                    //check if any of those times intersept the desired appointment
+                    //check if any of those times intercept the desired appointment
                     //if so, return false
                     for (int i = 0; i < timeRange.Count; i++)
                     {
